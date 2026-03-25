@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import { SITE, CATEGORIAS, WA_MESSAGES } from '../config/site.ts';
+
+const siteName = SITE.name || 'Bisutería Quito';
+
+// JSON-LD: LocalBusiness
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": siteName,
+  "description": SITE.description,
+  "url": SITE.url,
+  "telephone": SITE.phone ? `+${SITE.phone}` : undefined,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": SITE.city,
+    "addressCountry": SITE.country
+  },
+  "priceRange": "$$",
+  "currenciesAccepted": SITE.currency,
+  "openingHours": "Mo-Sa 09:00-18:00",
+  "sameAs": []
+};
+
+const waUrl = SITE.phone
+  ? `https://wa.me/${SITE.phone}?text=${encodeURIComponent(WA_MESSAGES.general)}`
+  : '#';
+
+const counts: Record<string, number> = {
+  collares: 38,
+  anillos: 9,
+  aretes: 8,
+  pulseras: 6,
+};
+---
+
+<BaseLayout
+  title={`${siteName} | Bisutería y Accesorios en Quito, Ecuador`}
+  description={SITE.description}
+  schema={schema}
+>
+
+  <!-- Hero -->
+  <HeroSection
+    title={siteName || 'Bisutería & Accesorios'}
+    subtitle="Descubre collares, anillos, aretes y pulseras de moda. Envíanos un mensaje y te asesoramos al instante."
+    ctaText="Consultar por WhatsApp"
+  />
+
+  <!-- Por qué elegirnos -->
+  <section class="features" aria-labelledby="features-heading">
+    <div class="features__inner">
+      <h2 class="section__title" id="features-heading">¿Por qué elegirnos?</h2>
+      <div class="section__divider"></div>
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature__icon" aria-hidden="true">✨</div>
+          <h3 class="feature__title">Diseños únicos</h3>
+          <p class="feature__text">Accesorios de moda seleccionados con estilo para cada ocasión.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon" aria-hidden="true">💬</div>
+          <h3 class="feature__title">Atención directa</h3>
+          <p class="feature__text">Hablamos contigo por WhatsApp para resolver tus dudas al momento.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon" aria-hidden="true">📍</div>
+          <h3 class="feature__title">En Quito</h3>
+          <p class="feature__text">Ubicados en {SITE.city}, {SITE.country}. Entrega y retiro disponible.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon" aria-hidden="true">💎</div>
+          <h3 class="feature__title">Calidad garantizada</h3>
+          <p class="feature__text">Cada pieza es revisada para asegurarte la mejor calidad.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorías -->
+  <section class="section" aria-labelledby="cats-heading">
+    <h2 class="section__title" id="cats-heading">Nuestros Productos</h2>
+    <div class="section__divider"></div>
+    <p class="section__subtitle">Explora nuestras colecciones de bisutería y accesorios</p>
+
+    <div class="categories-grid">
+      {CATEGORIAS.map(cat => (
+        <a href={`/${cat.slug}`} class="category-card" aria-label={`Ver ${cat.nombre}`}>
+          <div class="category-card__body">
+            <p class="category-card__name">{cat.nombre}</p>
+            <p class="category-card__count">{counts[cat.slug]} productos</p>
+            <p class="category-card__arrow">
+              Ver colección →
+            </p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+</BaseLayout>

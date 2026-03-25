@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { SITE, WA_MESSAGES } from '../config/site.ts';
+import type { ImageMetadata } from 'astro';
+
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/pulseras/*.png',
+  { eager: true }
+);
+
+const images = Object.entries(imageModules)
+  .sort(([a], [b]) => parseInt(a.replace(/\D/g, '')) - parseInt(b.replace(/\D/g, '')))
+  .map(([_, mod]) => mod.default);
+
+const siteName = SITE.name || 'Bisutería Quito';
+const title = 'Pulseras de Bisutería';
+const description = `Pulseras de bisutería y accesorios en ${SITE.city}, ${SITE.country}. ${images.length} diseños únicos para cada estilo. Consulta por WhatsApp.`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `${title} | ${siteName}`,
+  "description": description,
+  "url": `${SITE.url}/pulseras`,
+  "numberOfItems": images.length,
+  "itemListElement": images.map((_, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "url": `${SITE.url}/pulseras#producto-${i + 1}`
+  }))
+};
+---
+
+<BaseLayout
+  title={`${title} | ${siteName} - ${SITE.city}, ${SITE.country}`}
+  description={description}
+  canonical="/pulseras"
+  schema={schema}
+>
+  <div class="page-header">
+    <h1>{title}</h1>
+    <p>Colección de {images.length} diseños — {SITE.city}, {SITE.country}</p>
+  </div>
+
+  <nav class="breadcrumb" aria-label="Ruta de navegación">
+    <a href="/">Inicio</a>
+    <span aria-hidden="true">›</span>
+    <span aria-current="page">Pulseras</span>
+  </nav>
+
+  <section class="section" aria-label="Catálogo de pulseras">
+    <div class="products-grid">
+      {images.map((img, i) => (
+        <ProductCard
+          image={img}
+          alt={`Pulsera de bisutería número ${i + 1} - ${siteName} ${SITE.city}`}
+          waMessage={WA_MESSAGES.pulseras}
+          index={i}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

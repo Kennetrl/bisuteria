@@ -1,0 +1,98 @@
+---
+import { SITE, CATEGORIAS } from '../config/site.ts';
+const siteName = SITE.name || 'Bisutería Quito';
+---
+
+<header>
+  <nav class="navbar" aria-label="Navegación principal">
+    <div class="navbar__inner">
+
+      <!-- Logo / Marca -->
+      <a href="/" class="navbar__brand" aria-label="Inicio">
+        {siteName}
+      </a>
+
+      <!-- Menú desktop / mobile -->
+      <ul class="navbar__nav" id="main-nav" role="menubar">
+
+        <li role="none">
+          <a href="/" class="navbar__link" role="menuitem">Inicio</a>
+        </li>
+
+        <!-- Dropdown Productos -->
+        <li role="none">
+          <button
+            class="navbar__link navbar__dropdown-toggle"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="dropdown-productos"
+            id="btn-productos"
+            role="menuitem"
+          >
+            Productos
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="navbar__dropdown" id="dropdown-productos" role="menu" aria-labelledby="btn-productos">
+            {CATEGORIAS.map(cat => (
+              <li role="none">
+                <a href={`/${cat.slug}`} role="menuitem">{cat.nombre}</a>
+              </li>
+            ))}
+          </ul>
+        </li>
+
+        <li role="none">
+          <a href="/nosotros" class="navbar__link" role="menuitem">Nosotros</a>
+        </li>
+
+        <li role="none">
+          <a href="/contacto" class="navbar__link" role="menuitem">Contacto</a>
+        </li>
+
+      </ul>
+
+      <!-- Hamburger -->
+      <button
+        class="navbar__hamburger"
+        id="hamburger"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </nav>
+</header>
+
+<script>
+  const hamburger  = document.getElementById('hamburger')!;
+  const nav        = document.getElementById('main-nav')!;
+  const dropBtn    = document.getElementById('btn-productos')!;
+  const dropdown   = document.getElementById('dropdown-productos')!;
+
+  // Mobile menu toggle
+  hamburger.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('is-open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // Dropdown toggle (desktop & mobile)
+  dropBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isExpanded = dropBtn.getAttribute('aria-expanded') === 'true';
+    dropBtn.setAttribute('aria-expanded', String(!isExpanded));
+  });
+
+  // Close dropdown clicking outside
+  document.addEventListener('click', () => {
+    dropBtn.setAttribute('aria-expanded', 'false');
+  });
+
+  dropdown.addEventListener('click', (e) => e.stopPropagation());
+</script>

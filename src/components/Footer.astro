@@ -1,0 +1,65 @@
+---
+import { SITE, CATEGORIAS } from '../config/site.ts';
+const siteName = SITE.name || 'Bisutería Quito';
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="footer__inner">
+
+    <!-- Marca -->
+    <div>
+      <p class="footer__brand">{siteName}</p>
+      <p class="footer__text">
+        Bisutería y accesorios de moda en {SITE.city}, {SITE.country}.<br />
+        Escríbenos por WhatsApp para cualquier consulta.
+      </p>
+    </div>
+
+    <!-- Categorías -->
+    <div>
+      <p class="footer__heading">Categorías</p>
+      <ul class="footer__links">
+        {CATEGORIAS.map(cat => (
+          <li><a href={`/${cat.slug}`}>{cat.nombre}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Navegación -->
+    <div>
+      <p class="footer__heading">Navegación</p>
+      <ul class="footer__links">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/nosotros">Nosotros</a></li>
+        <li><a href="/contacto">Contacto</a></li>
+      </ul>
+    </div>
+
+    <!-- Contacto -->
+    <div>
+      <p class="footer__heading">Contacto</p>
+      <p class="footer__text">
+        {SITE.city}, {SITE.country}<br />
+        {SITE.phone ? (
+          <a
+            href={`https://wa.me/${SITE.phone}`}
+            style="color: #25D366; font-weight: 600;"
+            target="_blank"
+            rel="noopener"
+          >
+            WhatsApp
+          </a>
+        ) : 'WhatsApp disponible próximamente'}
+      </p>
+    </div>
+
+  </div>
+
+  <div class="footer__bottom">
+    <p>
+      &copy; {year} {siteName}. Todos los derechos reservados.
+      &mdash; {SITE.city}, {SITE.country}
+    </p>
+  </div>
+</footer>
