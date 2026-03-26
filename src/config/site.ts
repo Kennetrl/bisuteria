@@ -4,16 +4,16 @@
 // ============================================================
 
 export const SITE = {
-  /** Nombre de la tienda — dejar vacío si aún no tienes */
-  name: "",
+  /** Nombre de la tienda */
+  name: "Joyería Salomé",
   /** Eslogan que aparece debajo del nombre */
-  tagline: "Bisutería y Accesorios | Quito, Ecuador",
+  tagline: "Joyería de Acero Inoxidable | Quito, Ecuador",
   /** Descripción para SEO (meta description de la página principal) */
-  description: "Descubre nuestra colección de bisutería y accesorios en Quito, Ecuador. Collares, anillos, aretes y pulseras de moda. Consulta por WhatsApp.",
+  description: "Joyería de acero inoxidable quirúrgico 316L en Quito, Ecuador. Collares, anillos, aretes y pulseras que no se oxidan, no se ennegrecen y duran años. Joyas resistentes al agua de buena calidad.",
   /** URL del sitio — debe coincidir con astro.config.mjs */
-  url: "https://tusitio.com",
+  url: "https://joyeriasalome.site",
   /** Número de WhatsApp en formato internacional SIN + ni espacios */
-  phone: "",
+  phone: "593996796114",
   /** ID de Google Analytics — dejar vacío si no tienes */
   analytics: "",
   /** Datos de ubicación */
@@ -27,16 +27,15 @@ export const SITE = {
 
 // ============================================================
 // MENSAJES DE WHATSAPP POR PÁGINA
-// Permiten identificar de qué página proviene el cliente
 // ============================================================
 export const WA_MESSAGES = {
-  general:  "Hola, me interesa un producto de su catálogo. ¿Me pueden dar más información?",
-  collares: "Hola, estaba viendo sus collares y quisiera saber más sobre alguno. ¿Tienen disponibilidad?",
-  anillos:  "Hola, vi sus anillos en la web y me gustaría consultar sobre uno. ¿Tienen stock?",
-  aretes:   "Hola, me interesaron sus aretes. ¿Podrían contarme más sobre los materiales y precios?",
-  pulseras: "Hola, vi sus pulseras y quisiera consultar sobre disponibilidad y precios.",
-  nosotros: "Hola, ví su página y quisiera ponerme en contacto con ustedes.",
-  contacto: "Hola, me gustaría obtener más información sobre su tienda y productos.",
+  general:  "Hola, vi su catálogo de joyería de acero inoxidable y me interesa un producto. ¿Me pueden dar más información?",
+  collares: "Hola, estaba viendo sus collares de acero inoxidable y quisiera saber más sobre alguno. ¿Tienen disponibilidad?",
+  anillos:  "Hola, vi sus anillos de acero inoxidable en la web y me gustaría consultar sobre uno. ¿Tienen stock?",
+  aretes:   "Hola, me interesaron sus aretes de acero inoxidable. ¿Podrían contarme más sobre los materiales y precios?",
+  pulseras: "Hola, vi sus pulseras de acero inoxidable y quisiera consultar sobre disponibilidad y precios.",
+  nosotros: "Hola, vi su página de Joyería Salomé y quisiera ponerme en contacto con ustedes.",
+  contacto: "Hola, me gustaría obtener más información sobre la joyería de acero inoxidable que ofrecen.",
 };
 
 // ============================================================
@@ -46,25 +45,25 @@ export const CATEGORIAS = [
   {
     slug: "collares",
     nombre: "Collares",
-    descripcion: "Collares de bisutería de moda en Quito, Ecuador. Diseños elegantes y modernos para toda ocasión.",
+    descripcion: "Collares de acero inoxidable quirúrgico 316L en Quito, Ecuador. Diseños elegantes que no se oxidan ni pierden el brillo.",
     imagen: "/images/og-collares.jpg",
   },
   {
     slug: "anillos",
     nombre: "Anillos",
-    descripcion: "Anillos de bisutería y accesorios en Quito. Amplia variedad de estilos para complementar tu look.",
+    descripcion: "Anillos de acero inoxidable en Quito. No se ennegrecen, no se oxidan y mantienen su color por años.",
     imagen: "/images/og-anillos.jpg",
   },
   {
     slug: "aretes",
     nombre: "Aretes",
-    descripcion: "Aretes y pendientes de bisutería en Quito, Ecuador. Modelos colgantes, argollas y más.",
+    descripcion: "Aretes y pendientes de acero inoxidable en Quito, Ecuador. Modelos colgantes, argollas y más que duran años.",
     imagen: "/images/og-aretes.jpg",
   },
   {
     slug: "pulseras",
     nombre: "Pulseras",
-    descripcion: "Pulseras de bisutería y accesorios en Quito. Diseños únicos para cada estilo.",
+    descripcion: "Pulseras de acero inoxidable en Quito. Resistentes al agua, no se oxidan y mantienen su brillo original.",
     imagen: "/images/og-pulseras.jpg",
   },
 ];

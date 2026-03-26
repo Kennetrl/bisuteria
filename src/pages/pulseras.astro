@@ -13,14 +13,14 @@ const images = Object.entries(imageModules)
   .sort(([a], [b]) => parseInt(a.replace(/\D/g, '')) - parseInt(b.replace(/\D/g, '')))
   .map(([_, mod]) => mod.default);
 
-const siteName = SITE.name || 'Bisutería Quito';
-const title = 'Pulseras de Bisutería';
-const description = `Pulseras de bisutería y accesorios en ${SITE.city}, ${SITE.country}. ${images.length} diseños únicos para cada estilo. Consulta por WhatsApp.`;
+const siteName = SITE.name || 'Joyería Salomé';
+const title = `Pulseras de Acero Inoxidable en ${SITE.city}`;
+const description = `Pulseras de acero inoxidable quirúrgico 316L en ${SITE.city}, ${SITE.country}. ${images.length} diseños que no se oxidan, no pierden el brillo y duran años. Pulseras resistentes al agua de buena calidad.`;
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": `${title} | ${siteName}`,
+  "name": `Pulseras de Acero Inoxidable | ${siteName}`,
   "description": description,
   "url": `${SITE.url}/pulseras`,
   "numberOfItems": images.length,
@@ -33,14 +33,16 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`${title} | ${siteName} - ${SITE.city}, ${SITE.country}`}
+  title={title}
   description={description}
   canonical="/pulseras"
   schema={schema}
+  keywords="pulseras de acero inoxidable, pulseras que duran, pulseras que no se oxidan, pulseras resistentes al agua, pulseras de buena calidad"
 >
+
   <div class="page-header">
-    <h1>{title}</h1>
-    <p>Colección de {images.length} diseños — {SITE.city}, {SITE.country}</p>
+    <h1>Pulseras de Acero Inoxidable</h1>
+    <p>Acero Quirúrgico 316L · No se oxidan · Pulseras que duran años · {images.length} diseños</p>
   </div>
 
   <nav class="breadcrumb" aria-label="Ruta de navegación">
@@ -49,16 +51,38 @@ const schema = {
     <span aria-current="page">Pulseras</span>
   </nav>
 
-  <section class="section" aria-label="Catálogo de pulseras">
+  <div class="seo-intro">
+    <p>
+      Pulseras de acero inoxidable quirúrgico 316L diseñadas para durar años.
+      No se oxidan, no se ennegrecen y son completamente resistentes al agua — puedes usarlas en la piscina, en el gimnasio o en cualquier ocasión.
+      El complemento ideal para cualquier outfit, con la garantía de que siempre van a lucir igual de bonitas.
+    </p>
+  </div>
+
+  <section class="section" aria-label="Catálogo de pulseras de acero inoxidable">
     <div class="products-grid">
       {images.map((img, i) => (
         <ProductCard
           image={img}
-          alt={`Pulsera de bisutería número ${i + 1} - ${siteName} ${SITE.city}`}
+          alt={`Pulsera de acero inoxidable ${i + 1} - pulseras que duran años - ${siteName} ${SITE.city}`}
           waMessage={WA_MESSAGES.pulseras}
           index={i}
         />
       ))}
     </div>
   </section>
+
 </BaseLayout>
+
+<style>
+  .seo-intro {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+  }
+  .seo-intro p {
+    color: var(--color-text-light);
+    line-height: 1.75;
+    font-size: 1rem;
+  }
+</style>

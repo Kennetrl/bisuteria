@@ -4,30 +4,23 @@ import ProductCard from '../components/ProductCard.astro';
 import { SITE, WA_MESSAGES } from '../config/site.ts';
 import type { ImageMetadata } from 'astro';
 
-// Importar todas las imágenes de collares (Astro convierte a WebP en build)
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/collares/*.png',
   { eager: true }
 );
 
-// Ordenar numéricamente por nombre de archivo
 const images = Object.entries(imageModules)
-  .sort(([a], [b]) => {
-    const numA = parseInt(a.replace(/\D/g, ''));
-    const numB = parseInt(b.replace(/\D/g, ''));
-    return numA - numB;
-  })
+  .sort(([a], [b]) => parseInt(a.replace(/\D/g, '')) - parseInt(b.replace(/\D/g, '')))
   .map(([_, mod]) => mod.default);
 
-const siteName = SITE.name || 'Bisutería Quito';
-const title = 'Collares de Bisutería';
-const description = `Collares de bisutería y accesorios en ${SITE.city}, ${SITE.country}. Colección de ${images.length} diseños elegantes y modernos. Consulta disponibilidad por WhatsApp.`;
+const siteName = SITE.name || 'Joyería Salomé';
+const title = `Collares de Acero Inoxidable en ${SITE.city}`;
+const description = `Collares de acero inoxidable quirúrgico 316L en ${SITE.city}, ${SITE.country}. ${images.length} diseños que no se oxidan, no se ennegrecen y son resistentes al agua. Joyas de buena calidad que duran años.`;
 
-// JSON-LD: ItemList
 const schema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": `${title} | ${siteName}`,
+  "name": `Collares de Acero Inoxidable | ${siteName}`,
   "description": description,
   "url": `${SITE.url}/collares`,
   "numberOfItems": images.length,
@@ -40,32 +33,38 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`${title} | ${siteName} - ${SITE.city}, ${SITE.country}`}
+  title={title}
   description={description}
   canonical="/collares"
   schema={schema}
+  keywords="collares de acero inoxidable, collares que no se oxidan, collares resistentes al agua, collares que no se ennegrecen, collares de buena calidad"
 >
 
-  <!-- Page Header -->
   <div class="page-header">
-    <h1>{title}</h1>
-    <p>Colección de {images.length} diseños — {SITE.city}, {SITE.country}</p>
+    <h1>Collares de Acero Inoxidable</h1>
+    <p>Acero Quirúrgico 316L · No se oxidan · Resistentes al agua · {images.length} diseños</p>
   </div>
 
-  <!-- Breadcrumb -->
   <nav class="breadcrumb" aria-label="Ruta de navegación">
     <a href="/">Inicio</a>
     <span aria-hidden="true">›</span>
     <span aria-current="page">Collares</span>
   </nav>
 
-  <!-- Productos -->
-  <section class="section" aria-label="Catálogo de collares">
+  <div class="seo-intro">
+    <p>
+      Nuestros collares de acero inoxidable quirúrgico 316L no se oxidan, no se ennegrecen ni pierden el brillo con el tiempo.
+      Úsalos a diario, en la piscina o bajo la lluvia — están hechos para durar años sin desgastarse.
+      El accesorio perfecto para elevar cualquier outfit con estilo y elegancia.
+    </p>
+  </div>
+
+  <section class="section" aria-label="Catálogo de collares de acero inoxidable">
     <div class="products-grid">
       {images.map((img, i) => (
         <ProductCard
           image={img}
-          alt={`Collar de bisutería número ${i + 1} - ${siteName} ${SITE.city}`}
+          alt={`Collar de acero inoxidable ${i + 1} - joya que no se oxida ni se ennegrece - ${siteName} ${SITE.city}`}
           waMessage={WA_MESSAGES.collares}
           index={i}
         />
@@ -74,3 +73,16 @@ const schema = {
   </section>
 
 </BaseLayout>
+
+<style>
+  .seo-intro {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+  }
+  .seo-intro p {
+    color: var(--color-text-light);
+    line-height: 1.75;
+    font-size: 1rem;
+  }
+</style>

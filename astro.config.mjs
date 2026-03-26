@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 
-// ← Cambiar al dominio real antes de publicar
-const SITE_URL = 'https://tusitio.com';
+const SITE_URL = 'https://joyeriasalome.site';
 
 export default defineConfig({
   site: SITE_URL,

@@ -13,14 +13,14 @@ const images = Object.entries(imageModules)
   .sort(([a], [b]) => parseInt(a.replace(/\D/g, '')) - parseInt(b.replace(/\D/g, '')))
   .map(([_, mod]) => mod.default);
 
-const siteName = SITE.name || 'Bisutería Quito';
-const title = 'Aretes y Pendientes de Bisutería';
-const description = `Aretes y pendientes de bisutería en ${SITE.city}, ${SITE.country}. ${images.length} estilos: argollas, colgantes y más. Consulta disponibilidad por WhatsApp.`;
+const siteName = SITE.name || 'Joyería Salomé';
+const title = `Aretes de Acero Inoxidable en ${SITE.city}`;
+const description = `Aretes y pendientes de acero inoxidable quirúrgico 316L en ${SITE.city}, ${SITE.country}. ${images.length} estilos — argollas, colgantes y más. No se oxidan, no se ennegrecen y son resistentes al agua.`;
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": `${title} | ${siteName}`,
+  "name": `Aretes de Acero Inoxidable | ${siteName}`,
   "description": description,
   "url": `${SITE.url}/aretes`,
   "numberOfItems": images.length,
@@ -33,14 +33,16 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`${title} | ${siteName} - ${SITE.city}, ${SITE.country}`}
+  title={title}
   description={description}
   canonical="/aretes"
   schema={schema}
+  keywords="aretes de acero inoxidable, aretes que no se oxidan, aretes resistentes al agua, pendientes de acero inoxidable, aretes que duran años"
 >
+
   <div class="page-header">
-    <h1>{title}</h1>
-    <p>Colección de {images.length} diseños — {SITE.city}, {SITE.country}</p>
+    <h1>Aretes de Acero Inoxidable</h1>
+    <p>Acero Quirúrgico 316L · No se oxidan · Resistentes al agua · {images.length} diseños</p>
   </div>
 
   <nav class="breadcrumb" aria-label="Ruta de navegación">
@@ -49,16 +51,38 @@ const schema = {
     <span aria-current="page">Aretes</span>
   </nav>
 
-  <section class="section" aria-label="Catálogo de aretes">
+  <div class="seo-intro">
+    <p>
+      Aretes de acero inoxidable quirúrgico 316L: argollas, colgantes y más estilos que no se oxidan ni pierden el brillo.
+      Resistentes al agua y al uso diario, son la alternativa duradera frente a los aretes de joyería de fantasía que se ennegrecen.
+      Encuentra el par perfecto para resaltar tu estilo.
+    </p>
+  </div>
+
+  <section class="section" aria-label="Catálogo de aretes de acero inoxidable">
     <div class="products-grid">
       {images.map((img, i) => (
         <ProductCard
           image={img}
-          alt={`Aretes de bisutería número ${i + 1} - ${siteName} ${SITE.city}`}
+          alt={`Aretes de acero inoxidable ${i + 1} - joyas resistentes al agua - ${siteName} ${SITE.city}`}
           waMessage={WA_MESSAGES.aretes}
           index={i}
         />
       ))}
     </div>
   </section>
+
 </BaseLayout>
+
+<style>
+  .seo-intro {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+  }
+  .seo-intro p {
+    color: var(--color-text-light);
+    line-height: 1.75;
+    font-size: 1rem;
+  }
+</style>

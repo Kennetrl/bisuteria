@@ -2,9 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, CATEGORIAS, WA_MESSAGES } from '../config/site.ts';
 
-const siteName = SITE.name || 'Bisutería Quito';
+const siteName = SITE.name || 'Joyería Salomé';
 const title = 'Contacto';
-const description = `Contáctanos por WhatsApp para consultas sobre bisutería en ${SITE.city}, ${SITE.country}. Atención directa y personalizada.`;
+const description = `Contáctanos por WhatsApp para consultas sobre joyería de acero inoxidable en ${SITE.city}, ${SITE.country}. Atención directa y personalizada.`;
 
 const waUrl = SITE.phone
   ? `https://wa.me/${SITE.phone}?text=${encodeURIComponent(WA_MESSAGES.contacto)}`
@@ -20,10 +20,11 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`${title} | ${siteName}`}
+  title="Contacto - Consulta tu Joyería de Acero Inoxidable por WhatsApp"
   description={description}
   canonical="/contacto"
   schema={schema}
+  keywords="contacto joyería Quito, comprar joyería de acero inoxidable WhatsApp, consultar joyas acero 316L Ecuador"
 >
 
   <div class="page-header">
@@ -42,8 +43,8 @@ const schema = {
     <h2>WhatsApp</h2>
     <p>
       La forma más rápida de contactarnos es por WhatsApp.
-      Respondemos todos los días para ayudarte con consultas de productos,
-      disponibilidad y coordinación de entrega en {SITE.city}.
+      Respondemos todos los días para ayudarte a elegir tu joyería de acero inoxidable,
+      consultar disponibilidad y coordinar la entrega en {SITE.city}.
     </p>
 
     <a href={waUrl} class="contact-wa" target="_blank" rel="noopener noreferrer">

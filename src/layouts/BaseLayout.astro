@@ -11,6 +11,7 @@ interface Props {
   ogImage?: string;
   canonical?: string;
   schema?: object;
+  keywords?: string;
 }
 
 const {
@@ -19,14 +20,17 @@ const {
   ogImage = SITE.ogImage,
   canonical,
   schema,
+  keywords,
 } = Astro.props;
 
 const canonicalURL = canonical
   ? new URL(canonical, SITE.url)
   : new URL(Astro.url.pathname, SITE.url);
 
-const siteName = SITE.name || 'Bisutería Quito';
+const siteName = SITE.name || 'Joyería Salomé';
 const fullTitle = `${title} | ${siteName}`;
+const defaultKeywords = "joyería de acero inoxidable, joyas que no se oxidan, pulseras que duren, joyas resistentes al agua, accesorios de buena calidad, acero quirúrgico 316L, joyería Quito Ecuador";
+const pageKeywords = keywords ? `${keywords}, ${defaultKeywords}` : defaultKeywords;
 ---
 
 <!doctype html>
@@ -72,8 +76,11 @@ const fullTitle = `${title} | ${siteName}`;
       rel="stylesheet"
     />
 
-    <!-- Favicon placeholder -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Keywords SEO -->
+    <meta name="keywords" content={pageKeywords} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="/logo.webp" />
 
     <!-- Google Analytics -->
     {SITE.analytics && (

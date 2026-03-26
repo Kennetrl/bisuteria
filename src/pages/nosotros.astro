@@ -2,9 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, WA_MESSAGES } from '../config/site.ts';
 
-const siteName = SITE.name || 'Bisutería Quito';
+const siteName = SITE.name || 'Joyería Salomé';
 const title = 'Sobre Nosotros';
-const description = `Conoce nuestra tienda de bisutería y accesorios en ${SITE.city}, ${SITE.country}. Productos de moda, atención personalizada y consulta directa por WhatsApp.`;
+const description = `Conoce Joyería Salomé, tu tienda de joyería de acero inoxidable quirúrgico 316L en ${SITE.city}, ${SITE.country}. Joyas que no se oxidan, no se ennegrecen y duran años.`;
 
 const waUrl = SITE.phone
   ? `https://wa.me/${SITE.phone}?text=${encodeURIComponent(WA_MESSAGES.nosotros)}`
@@ -25,15 +25,16 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`${title} | ${siteName}`}
+  title="Sobre Nosotros - Joyería de Acero Inoxidable en Quito"
   description={description}
   canonical="/nosotros"
   schema={schema}
+  keywords="joyería de acero quirúrgico 316L, por qué comprar joyería de acero inoxidable, diferencia joyería fantasía vs acero inoxidable, joyas que duran años Quito"
 >
 
   <div class="page-header">
     <h1>{title}</h1>
-    <p>Conoce quiénes somos y qué nos mueve</p>
+    <p>Conoce quiénes somos y por qué nuestras joyas duran años</p>
   </div>
 
   <nav class="breadcrumb" aria-label="Ruta de navegación">
@@ -46,26 +47,36 @@ const schema = {
 
     <h2>Nuestra historia</h2>
     <p>
-      Somos una tienda de bisutería y accesorios ubicada en {SITE.city}, {SITE.country}.
-      Nació de la pasión por la moda y el deseo de ofrecer accesorios únicos y accesibles
-      para cada mujer que quiera expresar su estilo.
+      Joyería Salomé nació en {SITE.city}, {SITE.country}, de la pasión por los accesorios de verdadera calidad.
+      Cansadas de ver joyas que se oxidan, se ennegrecen o pierden el color a los pocos meses,
+      decidimos ofrecer algo diferente: joyería de acero inoxidable quirúrgico 316L que dura años.
     </p>
     <p>
-      Trabajamos para traerte colecciones que combinan tendencia, calidad y precio justo.
-      Cada pieza es cuidadosamente seleccionada para que encuentres algo especial en nuestro catálogo.
+      Sabemos que un outfit sin accesorios se ve simple. Un collar, unas pulseras o unos aretes
+      hacen que todo resalte. Por eso seleccionamos cuidadosamente cada pieza: diseños elegantes
+      que elevan cualquier look, con la garantía de que no van a desgastarse.
+    </p>
+
+    <h2>¿Qué es el Acero Quirúrgico 316L?</h2>
+    <p>
+      El Acero Inoxidable Quirúrgico 316L es el material de mayor calidad en joyería duradera.
+      A diferencia de la joyería de fantasía que usa metales de baja calidad con baño superficial,
+      el acero 316L es resistente al agua, al sudor y al paso del tiempo. No se oxida, no se
+      ennegrece y no pierde el brillo — tus joyas van a lucir igual de bonitas en años.
     </p>
 
     <h2>Nuestra misión</h2>
     <p>
-      Hacer que cada persona encuentre el accesorio perfecto para complementar su look,
-      con la comodidad de consultar y comprar directamente por WhatsApp desde donde estés.
+      Que cada persona pueda lucir accesorios de buena calidad sin preocuparse por el desgaste.
+      Joyas resistentes al agua que puedes usar todos los días, en la piscina, en el gimnasio,
+      o en cualquier ocasión — y que siempre van a verse impecables.
     </p>
 
     <h2>¿Por qué elegirnos?</h2>
     <p>
-      Atención personalizada, variedad en colecciones, precios accesibles y la comodidad de
-      contactarte directamente con nosotros. Estamos en {SITE.city} y podemos coordinar
-      entrega o retiro según tu preferencia.
+      Trabajamos exclusivamente con joyería de acero inoxidable quirúrgico 316L. Atención
+      personalizada por WhatsApp, variedad de diseños y la tranquilidad de saber que tus joyas
+      no se van a arruinar. Estamos en {SITE.city} y coordinamos entrega o retiro según tu preferencia.
     </p>
 
     <a href={waUrl} class="contact-wa" target="_blank" rel="noopener noreferrer">

@@ -13,14 +13,14 @@ const images = Object.entries(imageModules)
   .sort(([a], [b]) => parseInt(a.replace(/\D/g, '')) - parseInt(b.replace(/\D/g, '')))
   .map(([_, mod]) => mod.default);
 
-const siteName = SITE.name || 'Bisutería Quito';
-const title = 'Anillos de Bisutería';
-const description = `Anillos de bisutería y accesorios en ${SITE.city}, ${SITE.country}. ${images.length} modelos de moda disponibles. Consulta por WhatsApp para más información.`;
+const siteName = SITE.name || 'Joyería Salomé';
+const title = `Anillos de Acero Inoxidable en ${SITE.city}`;
+const description = `Anillos de acero inoxidable quirúrgico 316L en ${SITE.city}, ${SITE.country}. ${images.length} modelos que no se oxidan, no pierden el color y duran años. Joyas de buena calidad resistentes al agua.`;
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": `${title} | ${siteName}`,
+  "name": `Anillos de Acero Inoxidable | ${siteName}`,
   "description": description,
   "url": `${SITE.url}/anillos`,
   "numberOfItems": images.length,
@@ -33,14 +33,16 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`${title} | ${siteName} - ${SITE.city}, ${SITE.country}`}
+  title={title}
   description={description}
   canonical="/anillos"
   schema={schema}
+  keywords="anillos de acero inoxidable, anillos que no se oxidan, anillos que no se ennegrecen, anillos resistentes al agua, anillos que duran años"
 >
+
   <div class="page-header">
-    <h1>{title}</h1>
-    <p>Colección de {images.length} diseños — {SITE.city}, {SITE.country}</p>
+    <h1>Anillos de Acero Inoxidable</h1>
+    <p>Acero Quirúrgico 316L · No se ennegrecen · Resistentes al agua · {images.length} diseños</p>
   </div>
 
   <nav class="breadcrumb" aria-label="Ruta de navegación">
@@ -49,16 +51,38 @@ const schema = {
     <span aria-current="page">Anillos</span>
   </nav>
 
-  <section class="section" aria-label="Catálogo de anillos">
+  <div class="seo-intro">
+    <p>
+      Anillos de acero inoxidable quirúrgico 316L que mantienen su brillo y color por años.
+      No se oxidan, no se ennegrecen y son resistentes al agua y al sudor — ideales para usar todos los días.
+      Elige el tuyo y complementa tu look con una joya de verdadera calidad.
+    </p>
+  </div>
+
+  <section class="section" aria-label="Catálogo de anillos de acero inoxidable">
     <div class="products-grid">
       {images.map((img, i) => (
         <ProductCard
           image={img}
-          alt={`Anillo de bisutería número ${i + 1} - ${siteName} ${SITE.city}`}
+          alt={`Anillo de acero inoxidable ${i + 1} - joya que no se oxida - ${siteName} ${SITE.city}`}
           waMessage={WA_MESSAGES.anillos}
           index={i}
         />
       ))}
     </div>
   </section>
+
 </BaseLayout>
+
+<style>
+  .seo-intro {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+  }
+  .seo-intro p {
+    color: var(--color-text-light);
+    line-height: 1.75;
+    font-size: 1rem;
+  }
+</style>
