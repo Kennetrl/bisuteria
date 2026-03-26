@@ -3,7 +3,12 @@
     "allow": [
       "Bash(find . -not -path */.git/* -not -path */.astro/* -not -path */node_modules/* -type d)",
       "Bash(node -e \":*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(npm audit:*)",
+      "Bash(npm list:*)",
+      "Bash(find /d/Escritorio/Kennet/ProyectosGit/Joyeria/src -type f -name *.astro -o -name *.ts -o -name *.tsx -o -name *.jsx -o -name *.js)",
+      "Bash(npm show:*)",
+      "Bash(npm install:*)"
     ]
   }
 }
