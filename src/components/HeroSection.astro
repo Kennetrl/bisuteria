@@ -1,15 +1,27 @@
 ---
-import { SITE, WA_MESSAGES } from '../config/site.ts';
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+import { SITE, WA_MESSAGES } from '../config/site.ts';
+
+// Slider: una imagen de cada carpeta/categoría
+import sliderCollares  from '../assets/collares/Aguacatito.png';
+import sliderAnillos   from '../assets/anillos/Corazon Bolita.png';
+import sliderAretes    from '../assets/aretes/Corazon Mini.png';
+import sliderPulseras  from '../assets/pulseras/Mini Corazones.png';
+import sliderHombres   from '../assets/hombres/Cadena cordon Dorada.png';
+
+const sliderImages = [
+  { src: sliderCollares, label: 'Collar Aguacatito de acero inoxidable' },
+  { src: sliderAnillos,  label: 'Anillo Corazón Bolita de acero inoxidable' },
+  { src: sliderAretes,   label: 'Aretes Corazón Mini de acero inoxidable' },
+  { src: sliderPulseras, label: 'Pulsera Mini Corazones de acero inoxidable' },
+  { src: sliderHombres,  label: 'Cadena Cordón para hombre de acero inoxidable' },
+];
 
 interface Props {
   eyebrow?: string;
   title: string;
   subtitle: string;
   ctaText?: string;
-  image?: ImageMetadata;
-  imageAlt?: string;
 }
 
 const {
@@ -17,8 +29,6 @@ const {
   title,
   subtitle,
   ctaText = 'Consultar por WhatsApp',
-  image,
-  imageAlt = '',
 } = Astro.props;
 
 const waUrl = SITE.phone
@@ -26,7 +36,7 @@ const waUrl = SITE.phone
   : '/contacto';
 ---
 
-<section class={`hero${image ? ' hero--with-image' : ''}`} aria-labelledby="hero-heading">
+<section class="hero" aria-labelledby="hero-heading">
   <div class="hero__inner">
 
     <div class="hero__content">
@@ -47,31 +57,98 @@ const waUrl = SITE.phone
       </a>
     </div>
 
-    {image && (
-      <div class="hero__image">
-        <Image
-          src={image}
-          alt={imageAlt}
-          width={420}
-          height={420}
-          loading="eager"
-          class="hero__img"
-        />
+    <!-- Slider de imágenes de productos -->
+    <div class="hero__slider" aria-label="Muestra de productos">
+      <div class="hero__slides-wrap">
+        {sliderImages.map((item, i) => (
+          <div class={`hero__slide${i === 0 ? ' hero__slide--active' : ''}`} aria-hidden={i !== 0}>
+            <Image
+              src={item.src}
+              alt={item.label}
+              width={420}
+              height={420}
+              format="webp"
+              quality={82}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              class="hero__slide-img"
+            />
+          </div>
+        ))}
       </div>
-    )}
+      <div class="hero__dots" role="tablist" aria-label="Navegación del carrusel">
+        {sliderImages.map((_, i) => (
+          <button
+            class={`hero__dot${i === 0 ? ' hero__dot--active' : ''}`}
+            data-index={i}
+            role="tab"
+            aria-selected={i === 0}
+            aria-label={`Imagen ${i + 1} de ${sliderImages.length}`}
+          ></button>
+        ))}
+      </div>
+    </div>
 
   </div>
 </section>
 
+<script>
+  const slides  = Array.from(document.querySelectorAll<HTMLElement>('.hero__slide'));
+  const dots    = Array.from(document.querySelectorAll<HTMLElement>('.hero__dot'));
+  let current   = 0;
+  let animating = false;
+  let timer: ReturnType<typeof setInterval>;
+
+  function goTo(next: number) {
+    if (animating || next === current) return;
+    animating = true;
+
+    const prev = current;
+    current = next;
+
+    // Salida: slide actual sube y desvanece
+    slides[prev].classList.add('hero__slide--exit');
+    slides[prev].classList.remove('hero__slide--active');
+    dots[prev].classList.remove('hero__dot--active');
+    dots[prev].setAttribute('aria-selected', 'false');
+
+    // Entrada: siguiente slide sube desde abajo
+    slides[current].classList.add('hero__slide--active');
+    dots[current].classList.add('hero__dot--active');
+    dots[current].setAttribute('aria-selected', 'true');
+
+    setTimeout(() => {
+      slides[prev].classList.remove('hero__slide--exit');
+      animating = false;
+    }, 700);
+  }
+
+  function next() {
+    goTo((current + 1) % slides.length);
+  }
+
+  timer = setInterval(next, 3800);
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      clearInterval(timer);
+      goTo(i);
+      timer = setInterval(next, 3800);
+    });
+  });
+</script>
+
 <style>
-  /* Layout con imagen: dos columnas en desktop */
-  .hero--with-image .hero__inner {
+  /* Layout dos columnas */
+  .hero__inner {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 48px;
     text-align: left;
     max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
   }
 
   .hero__content {
@@ -79,41 +156,94 @@ const waUrl = SITE.phone
     min-width: 0;
   }
 
-  .hero--with-image .hero__sub {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .hero__image {
+  /* Slider container */
+  .hero__slider {
     flex: 0 0 380px;
     max-width: 380px;
   }
 
-  .hero__img {
+  /* Contenedor de slides con altura fija */
+  .hero__slides-wrap {
+    position: relative;
     width: 100%;
-    height: auto;
-    border-radius: 20px;
-    object-fit: contain;
-    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.35));
+    padding-bottom: 100%; /* cuadrado 1:1 */
   }
 
-  /* Mobile: vuelve a columna, imagen debajo */
+  /* Todos los slides absolutos - evita el salto de layout */
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    pointer-events: none;
+  }
+
+  /* Slide activo: visible y en posición */
+  .hero__slide--active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Slide saliendo: sube hacia arriba y desvanece */
+  .hero__slide--exit {
+    opacity: 0;
+    transform: translateY(-18px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  .hero__slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.45));
+  }
+
+  /* Dots indicadores */
+  .hero__dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .hero__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.35);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .hero__dot--active {
+    background: var(--color-accent);
+    transform: scale(1.4);
+  }
+
+  /* Mobile */
   @media (max-width: 768px) {
-    .hero--with-image .hero__inner {
+    .hero__inner {
       flex-direction: column;
       text-align: center;
       gap: 32px;
     }
 
-    .hero--with-image .hero__sub {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hero__image {
+    .hero__slider {
       flex: none;
       max-width: 260px;
       width: 100%;
+    }
+
+    .hero__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 </style>

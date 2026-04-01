@@ -10,8 +10,11 @@ const imageModules = import.meta.glob<{ default: ImageMetadata }>(
 );
 
 const images = Object.entries(imageModules)
-  .sort(([a], [b]) => parseInt(a.replace(/\D/g, '')) - parseInt(b.replace(/\D/g, '')))
-  .map(([_, mod]) => mod.default);
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => ({
+    src: mod.default,
+    name: path.split('/').pop()?.replace('.png', '') || '',
+  }));
 
 const siteName = SITE.name || 'Joyería Salomé';
 const title = `Anillos de Acero Inoxidable en ${SITE.city}`;
@@ -37,12 +40,12 @@ const schema = {
   description={description}
   canonical="/anillos"
   schema={schema}
-  keywords="anillos de acero inoxidable, anillos que no se oxidan, anillos que no se ennegrecen, anillos resistentes al agua, anillos que duran años"
+  keywords="anillos de acero inoxidable, anillos que no se oxidan, anillos resistentes al agua, anillos que duran años"
 >
 
   <div class="page-header">
     <h1>Anillos de Acero Inoxidable</h1>
-    <p>Acero Quirúrgico 316L · No se ennegrecen · Resistentes al agua · {images.length} diseños</p>
+    <p>Acero Quirúrgico 316L · No se oxidan · Resistentes al agua · {images.length} diseños</p>
   </div>
 
   <nav class="breadcrumb" aria-label="Ruta de navegación">
@@ -54,17 +57,20 @@ const schema = {
   <div class="seo-intro">
     <p>
       Anillos de acero inoxidable quirúrgico 316L que mantienen su brillo y color por años.
-      No se oxidan, no se ennegrecen y son resistentes al agua y al sudor — ideales para usar todos los días.
+      No se oxidan y son resistentes al agua y al sudor — ideales para usar todos los días.
       Elige el tuyo y complementa tu look con una joya de verdadera calidad.
     </p>
   </div>
 
-  <section class="section" aria-label="Catálogo de anillos de acero inoxidable">
+  <section class="section" aria-labelledby="anillos-heading">
+    <h2 class="section__title" id="anillos-heading">Catálogo de Anillos</h2>
+    <div class="section__divider"></div>
     <div class="products-grid">
-      {images.map((img, i) => (
+      {images.map((item, i) => (
         <ProductCard
-          image={img}
-          alt={`Anillo de acero inoxidable ${i + 1} - joya que no se oxida - ${siteName} ${SITE.city}`}
+          image={item.src}
+          alt={`Anillo ${item.name} de acero inoxidable - no se oxida - ${siteName} ${SITE.city}`}
+          name={item.name}
           waMessage={WA_MESSAGES.anillos}
           index={i}
         />

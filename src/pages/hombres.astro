@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { SITE, WA_MESSAGES } from '../config/site.ts';
+import type { ImageMetadata } from 'astro';
+
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/hombres/*.png',
+  { eager: true }
+);
+
+const images = Object.entries(imageModules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => ({
+    src: mod.default,
+    name: path.split('/').pop()?.replace('.png', '') || '',
+  }));
+
+const siteName = SITE.name || 'Joyería Salomé';
+const title = `Joyería para Hombres de Acero Inoxidable en ${SITE.city}`;
+const description = `Joyería de acero inoxidable quirúrgico 316L para hombres en ${SITE.city}, ${SITE.country}. ${images.length} diseños — cadenas y accesorios que no se oxidan y duran años.`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `Joyería para Hombres | ${siteName}`,
+  "description": description,
+  "url": `${SITE.url}/hombres`,
+  "numberOfItems": images.length,
+  "itemListElement": images.map((_, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "url": `${SITE.url}/hombres#producto-${i + 1}`
+  }))
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/hombres"
+  schema={schema}
+  keywords="joyería para hombres acero inoxidable, cadenas hombre que no se oxidan, accesorios hombre acero quirúrgico 316L, joyería masculina Quito"
+>
+
+  <div class="page-header">
+    <h1>Joyería para Hombres</h1>
+    <p>Acero Quirúrgico 316L · No se oxidan · Resistentes al agua · {images.length} diseños</p>
+  </div>
+
+  <nav class="breadcrumb" aria-label="Ruta de navegación">
+    <a href="/">Inicio</a>
+    <span aria-hidden="true">›</span>
+    <span aria-current="page">Hombres</span>
+  </nav>
+
+  <div class="seo-intro">
+    <p>
+      Cadenas y accesorios de acero inoxidable quirúrgico 316L para hombres que no se oxidan ni pierden el brillo.
+      Resistentes al agua, al sudor y al uso diario — ideales para llevar en cualquier ocasión.
+      Accesorios de verdadera calidad que duran años.
+    </p>
+  </div>
+
+  <section class="section" aria-labelledby="hombres-heading">
+    <h2 class="section__title" id="hombres-heading">Catálogo Hombres</h2>
+    <div class="section__divider"></div>
+    <div class="products-grid">
+      {images.map((item, i) => (
+        <ProductCard
+          image={item.src}
+          alt={`${item.name} de acero inoxidable para hombres - no se oxida - ${siteName} ${SITE.city}`}
+          name={item.name}
+          waMessage={WA_MESSAGES.hombres}
+          index={i}
+        />
+      ))}
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .seo-intro {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+  }
+  .seo-intro p {
+    color: var(--color-text-light);
+    line-height: 1.75;
+    font-size: 1rem;
+  }
+</style>

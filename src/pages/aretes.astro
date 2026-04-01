@@ -10,12 +10,15 @@ const imageModules = import.meta.glob<{ default: ImageMetadata }>(
 );
 
 const images = Object.entries(imageModules)
-  .sort(([a], [b]) => parseInt(a.replace(/\D/g, '')) - parseInt(b.replace(/\D/g, '')))
-  .map(([_, mod]) => mod.default);
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => ({
+    src: mod.default,
+    name: path.split('/').pop()?.replace('.png', '') || '',
+  }));
 
 const siteName = SITE.name || 'Joyería Salomé';
 const title = `Aretes de Acero Inoxidable en ${SITE.city}`;
-const description = `Aretes y pendientes de acero inoxidable quirúrgico 316L en ${SITE.city}, ${SITE.country}. ${images.length} estilos — argollas, colgantes y más. No se oxidan, no se ennegrecen y son resistentes al agua.`;
+const description = `Aretes y pendientes de acero inoxidable quirúrgico 316L en ${SITE.city}, ${SITE.country}. ${images.length} estilos — argollas, colgantes y más. No se oxidan y son resistentes al agua.`;
 
 const schema = {
   "@context": "https://schema.org",
@@ -54,17 +57,20 @@ const schema = {
   <div class="seo-intro">
     <p>
       Aretes de acero inoxidable quirúrgico 316L: argollas, colgantes y más estilos que no se oxidan ni pierden el brillo.
-      Resistentes al agua y al uso diario, son la alternativa duradera frente a los aretes de joyería de fantasía que se ennegrecen.
+      Resistentes al agua y al uso diario, son la alternativa duradera frente a los aretes de joyería de fantasía que se oxidan.
       Encuentra el par perfecto para resaltar tu estilo.
     </p>
   </div>
 
-  <section class="section" aria-label="Catálogo de aretes de acero inoxidable">
+  <section class="section" aria-labelledby="aretes-heading">
+    <h2 class="section__title" id="aretes-heading">Catálogo de Aretes</h2>
+    <div class="section__divider"></div>
     <div class="products-grid">
-      {images.map((img, i) => (
+      {images.map((item, i) => (
         <ProductCard
-          image={img}
-          alt={`Aretes de acero inoxidable ${i + 1} - joyas resistentes al agua - ${siteName} ${SITE.city}`}
+          image={item.src}
+          alt={`Aretes ${item.name} de acero inoxidable - no se oxidan - ${siteName} ${SITE.city}`}
+          name={item.name}
           waMessage={WA_MESSAGES.aretes}
           index={i}
         />

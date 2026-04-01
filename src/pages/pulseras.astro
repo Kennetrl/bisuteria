@@ -10,8 +10,11 @@ const imageModules = import.meta.glob<{ default: ImageMetadata }>(
 );
 
 const images = Object.entries(imageModules)
-  .sort(([a], [b]) => parseInt(a.replace(/\D/g, '')) - parseInt(b.replace(/\D/g, '')))
-  .map(([_, mod]) => mod.default);
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => ({
+    src: mod.default,
+    name: path.split('/').pop()?.replace('.png', '') || '',
+  }));
 
 const siteName = SITE.name || 'Joyería Salomé';
 const title = `Pulseras de Acero Inoxidable en ${SITE.city}`;
@@ -54,17 +57,20 @@ const schema = {
   <div class="seo-intro">
     <p>
       Pulseras de acero inoxidable quirúrgico 316L diseñadas para durar años.
-      No se oxidan, no se ennegrecen y son completamente resistentes al agua — puedes usarlas en la piscina, en el gimnasio o en cualquier ocasión.
+      No se oxidan y son completamente resistentes al agua — puedes usarlas en la piscina, en el gimnasio o en cualquier ocasión.
       El complemento ideal para cualquier outfit, con la garantía de que siempre van a lucir igual de bonitas.
     </p>
   </div>
 
-  <section class="section" aria-label="Catálogo de pulseras de acero inoxidable">
+  <section class="section" aria-labelledby="pulseras-heading">
+    <h2 class="section__title" id="pulseras-heading">Catálogo de Pulseras</h2>
+    <div class="section__divider"></div>
     <div class="products-grid">
-      {images.map((img, i) => (
+      {images.map((item, i) => (
         <ProductCard
-          image={img}
-          alt={`Pulsera de acero inoxidable ${i + 1} - pulseras que duran años - ${siteName} ${SITE.city}`}
+          image={item.src}
+          alt={`Pulsera ${item.name} de acero inoxidable - no se oxida - ${siteName} ${SITE.city}`}
+          name={item.name}
           waMessage={WA_MESSAGES.pulseras}
           index={i}
         />

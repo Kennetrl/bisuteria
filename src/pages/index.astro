@@ -1,8 +1,31 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroSection from '../components/HeroSection.astro';
-import { SITE, CATEGORIAS, WA_MESSAGES } from '../config/site.ts';
-import anilloCorazon from '../assets/anillo-corazon.webp';
+import { SITE, CATEGORIAS, WA_MESSAGES, SOCIAL } from '../config/site.ts';
+import { Image } from 'astro:assets';
+
+// Galería 3×3 — una imagen representativa por categoría (9 total)
+import galCollares1  from '../assets/collares/Aguacatito.png';
+import galCollares2  from '../assets/collares/Mariposa Minimalista.png';
+import galAnillos1   from '../assets/anillos/Corazon Bolita.png';
+import galAnillos2   from '../assets/anillos/Sol Piedra Azul.png';
+import galAretes1    from '../assets/aretes/Corazon Mini.png';
+import galAretes2    from '../assets/aretes/Espiral mini Dorado.png';
+import galPulseras1  from '../assets/pulseras/Mini Flores.png';
+import galPulseras2  from '../assets/pulseras/Mini Corazones.png';
+import galHombres    from '../assets/hombres/Cadena cordon Dorada.png';
+
+const galleryItems = [
+  { src: galCollares1, alt: 'Collar Aguacatito de acero inoxidable 316L - no se oxida - Joyería Salomé Quito',          label: 'Collares', href: '/collares' },
+  { src: galAnillos1,  alt: 'Anillo Corazón Bolita de acero inoxidable 316L - resistente al agua - Joyería Salomé',     label: 'Anillos',  href: '/anillos'  },
+  { src: galAretes1,   alt: 'Aretes Corazón Mini de acero inoxidable 316L - joyas que no se oxidan - Joyería Salomé',   label: 'Aretes',   href: '/aretes'   },
+  { src: galPulseras1, alt: 'Pulsera Mini Flores de acero inoxidable 316L - no se oxida - Joyería Salomé Quito',        label: 'Pulseras', href: '/pulseras'  },
+  { src: galHombres,   alt: 'Cadena Cordón Dorada para hombre de acero inoxidable - Joyería Salomé Quito',              label: 'Hombres',  href: '/hombres'  },
+  { src: galCollares2, alt: 'Collar Mariposa Minimalista de acero inoxidable 316L - joyería Quito Ecuador',              label: 'Collares', href: '/collares' },
+  { src: galAnillos2,  alt: 'Anillo Sol Piedra Azul de acero inoxidable 316L - accesorios que duran años',               label: 'Anillos',  href: '/anillos'  },
+  { src: galAretes2,   alt: 'Aretes Espiral Mini Dorado de acero inoxidable 316L - no se oxidan - Joyería Salomé',      label: 'Aretes',   href: '/aretes'   },
+  { src: galPulseras2, alt: 'Pulsera Mini Corazones de acero inoxidable 316L - resistente al agua - Joyería Salomé',    label: 'Pulseras', href: '/pulseras'  },
+];
 
 const siteName = SITE.name || 'Joyería Salomé';
 
@@ -21,14 +44,15 @@ const schema = {
   "priceRange": "$$",
   "currenciesAccepted": SITE.currency,
   "openingHours": "Mo-Sa 09:00-18:00",
-  "sameAs": []
+  "sameAs": [SOCIAL.instagram, SOCIAL.facebook, SOCIAL.tiktok]
 };
 
 const counts: Record<string, number> = {
-  collares: 38,
-  anillos: 9,
-  aretes: 8,
-  pulseras: 6,
+  collares: 20,
+  anillos: 10,
+  aretes: 6,
+  pulseras: 3,
+  hombres: 2,
 };
 ---
 
@@ -39,13 +63,10 @@ const counts: Record<string, number> = {
   keywords="joyería de acero inoxidable Quito, joyas acero quirúrgico 316L, joyas que no se oxidan Ecuador, accesorios de buena calidad Quito"
 >
 
-  <!-- Hero con imagen del anillo corazón -->
   <HeroSection
     title={siteName}
-    subtitle="Joyas de Acero Quirúrgico 316L que no se oxidan, no se ennegrecen y duran años. Eleva tu outfit con pulseras, collares, anillos y aretes resistentes al agua."
+    subtitle="Joyas de Acero Quirúrgico 316L que no se oxidan y duran años. Eleva tu outfit con pulseras, collares, anillos y aretes resistentes al agua."
     ctaText="Consultar por WhatsApp"
-    image={anilloCorazon}
-    imageAlt="Anillo corazón de acero inoxidable quirúrgico 316L - Joyería Salomé Quito"
   />
 
   <!-- Por qué elegirnos -->
@@ -61,7 +82,7 @@ const counts: Record<string, number> = {
         </div>
         <div class="feature">
           <div class="feature__icon" aria-hidden="true">✨</div>
-          <h3 class="feature__title">No se ennegrecen</h3>
+          <h3 class="feature__title">No se oxidan</h3>
           <p class="feature__text">A diferencia de la joyería de fantasía, el acero inoxidable quirúrgico mantiene su color y brillo por años.</p>
         </div>
         <div class="feature">
@@ -75,6 +96,36 @@ const counts: Record<string, number> = {
           <p class="feature__text">Usamos exclusivamente Acero Quirúrgico 316L — el estándar de mayor calidad, duradero y apto para pieles sensibles.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Galería 3×3 -->
+  <section class="gallery-section" aria-labelledby="gallery-heading">
+    <h2 class="section__title" id="gallery-heading">Nuestra Colección</h2>
+    <div class="section__divider"></div>
+    <p class="section__subtitle">Haz clic en cualquier pieza para explorar esa categoría</p>
+    <div class="gallery-grid">
+      {galleryItems.map((item) => (
+        <a
+          href={item.href}
+          class="gallery-item"
+          aria-label={`Ver ${item.label} - ${item.alt}`}
+          title={item.alt}
+        >
+          <Image
+            src={item.src}
+            alt={item.alt}
+            width={400}
+            height={400}
+            format="webp"
+            quality={80}
+            loading="lazy"
+          />
+          <div class="gallery-item__overlay">
+            <span class="gallery-item__label">{item.label}</span>
+          </div>
+        </a>
+      ))}
     </div>
   </section>
 

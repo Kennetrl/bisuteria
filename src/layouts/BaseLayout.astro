@@ -72,7 +72,7 @@ const pageKeywords = keywords ? `${keywords}, ${defaultKeywords}` : defaultKeywo
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
@@ -102,5 +102,24 @@ const pageKeywords = keywords ? `${keywords}, ${defaultKeywords}` : defaultKeywo
     </main>
     <Footer />
     <WhatsAppButton />
+
+    <!-- Fade-in on scroll -->
+    <script>
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+
+      document.querySelectorAll(
+        'main h2, main h3, main p, main .product-card, main .feature, main .category-card, main .gallery-item, main .seo-intro, main .breadcrumb, main .content-page h2, main .content-page p'
+      ).forEach(el => {
+        el.classList.add('fade-in');
+        observer.observe(el);
+      });
+    </script>
   </body>
 </html>

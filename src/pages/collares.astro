@@ -10,12 +10,15 @@ const imageModules = import.meta.glob<{ default: ImageMetadata }>(
 );
 
 const images = Object.entries(imageModules)
-  .sort(([a], [b]) => parseInt(a.replace(/\D/g, '')) - parseInt(b.replace(/\D/g, '')))
-  .map(([_, mod]) => mod.default);
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => ({
+    src: mod.default,
+    name: path.split('/').pop()?.replace('.png', '') || '',
+  }));
 
 const siteName = SITE.name || 'Joyería Salomé';
 const title = `Collares de Acero Inoxidable en ${SITE.city}`;
-const description = `Collares de acero inoxidable quirúrgico 316L en ${SITE.city}, ${SITE.country}. ${images.length} diseños que no se oxidan, no se ennegrecen y son resistentes al agua. Joyas de buena calidad que duran años.`;
+const description = `Collares de acero inoxidable quirúrgico 316L en ${SITE.city}, ${SITE.country}. ${images.length} diseños que no se oxidan y son resistentes al agua. Joyas de buena calidad que duran años.`;
 
 const schema = {
   "@context": "https://schema.org",
@@ -37,7 +40,7 @@ const schema = {
   description={description}
   canonical="/collares"
   schema={schema}
-  keywords="collares de acero inoxidable, collares que no se oxidan, collares resistentes al agua, collares que no se ennegrecen, collares de buena calidad"
+  keywords="collares de acero inoxidable, collares que no se oxidan, collares resistentes al agua, collares de buena calidad"
 >
 
   <div class="page-header">
@@ -53,18 +56,21 @@ const schema = {
 
   <div class="seo-intro">
     <p>
-      Nuestros collares de acero inoxidable quirúrgico 316L no se oxidan, no se ennegrecen ni pierden el brillo con el tiempo.
+      Nuestros collares de acero inoxidable quirúrgico 316L no se oxidan ni pierden el brillo con el tiempo.
       Úsalos a diario, en la piscina o bajo la lluvia — están hechos para durar años sin desgastarse.
       El accesorio perfecto para elevar cualquier outfit con estilo y elegancia.
     </p>
   </div>
 
-  <section class="section" aria-label="Catálogo de collares de acero inoxidable">
+  <section class="section" aria-labelledby="collares-heading">
+    <h2 class="section__title" id="collares-heading">Catálogo de Collares</h2>
+    <div class="section__divider"></div>
     <div class="products-grid">
-      {images.map((img, i) => (
+      {images.map((item, i) => (
         <ProductCard
-          image={img}
-          alt={`Collar de acero inoxidable ${i + 1} - joya que no se oxida ni se ennegrece - ${siteName} ${SITE.city}`}
+          image={item.src}
+          alt={`Collar ${item.name} de acero inoxidable - no se oxida - ${siteName} ${SITE.city}`}
+          name={item.name}
           waMessage={WA_MESSAGES.collares}
           index={i}
         />

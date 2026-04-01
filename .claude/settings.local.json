@@ -8,7 +8,16 @@
       "Bash(npm list:*)",
       "Bash(find /d/Escritorio/Kennet/ProyectosGit/Joyeria/src -type f -name *.astro -o -name *.ts -o -name *.tsx -o -name *.jsx -o -name *.js)",
       "Bash(npm show:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(rm -f src/assets/collares/*.png)",
+      "Bash(rm -f src/assets/anillos/*.png)",
+      "Bash(rm -f src/assets/aretes/*.png)",
+      "Bash(rm -f src/assets/pulseras/*.png)",
+      "Bash(cp \"Cadenas real/\"*.png src/assets/collares/)",
+      "Bash(cp \"Anillos Real/\"*.png src/assets/anillos/)",
+      "Bash(cp \"Aretes Real/\"*.png src/assets/aretes/)",
+      "Bash(cp \"Pulseras Real/\"*.png src/assets/pulseras/)",
+      "Bash(mkdir -p src/assets/hombres)"
     ]
   }
 }

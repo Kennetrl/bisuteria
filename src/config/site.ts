@@ -9,7 +9,7 @@ export const SITE = {
   /** Eslogan que aparece debajo del nombre */
   tagline: "Joyería de Acero Inoxidable | Quito, Ecuador",
   /** Descripción para SEO (meta description de la página principal) */
-  description: "Joyería de acero inoxidable quirúrgico 316L en Quito, Ecuador. Collares, anillos, aretes y pulseras que no se oxidan, no se ennegrecen y duran años. Joyas resistentes al agua de buena calidad.",
+  description: "Joyería de acero inoxidable quirúrgico 316L en Quito, Ecuador. Collares, anillos, aretes y pulseras que no se oxidan y duran años. Joyas resistentes al agua de buena calidad.",
   /** URL del sitio — debe coincidir con astro.config.mjs */
   url: "https://joyeriasalome.site",
   /** Número de WhatsApp en formato internacional SIN + ni espacios */
@@ -34,6 +34,7 @@ export const WA_MESSAGES = {
   anillos:  "Hola, vi sus anillos de acero inoxidable en la web y me gustaría consultar sobre uno. ¿Tienen stock?",
   aretes:   "Hola, me interesaron sus aretes de acero inoxidable. ¿Podrían contarme más sobre los materiales y precios?",
   pulseras: "Hola, vi sus pulseras de acero inoxidable y quisiera consultar sobre disponibilidad y precios.",
+  hombres:  "Hola, vi su colección de joyería para hombres y quisiera consultar sobre disponibilidad y precios.",
   nosotros: "Hola, vi su página de Joyería Salomé y quisiera ponerme en contacto con ustedes.",
   contacto: "Hola, me gustaría obtener más información sobre la joyería de acero inoxidable que ofrecen.",
 };
@@ -51,7 +52,7 @@ export const CATEGORIAS = [
   {
     slug: "anillos",
     nombre: "Anillos",
-    descripcion: "Anillos de acero inoxidable en Quito. No se ennegrecen, no se oxidan y mantienen su color por años.",
+    descripcion: "Anillos de acero inoxidable en Quito. No se oxidan y mantienen su color por años.",
     imagen: "/images/og-anillos.jpg",
   },
   {
@@ -66,4 +67,19 @@ export const CATEGORIAS = [
     descripcion: "Pulseras de acero inoxidable en Quito. Resistentes al agua, no se oxidan y mantienen su brillo original.",
     imagen: "/images/og-pulseras.jpg",
   },
+  {
+    slug: "hombres",
+    nombre: "Hombres",
+    descripcion: "Joyería de acero inoxidable para hombres en Quito, Ecuador. Cadenas y accesorios que no se oxidan y duran años.",
+    imagen: "/images/og-hombres.jpg",
+  },
 ];
+
+// ============================================================
+// REDES SOCIALES
+// ============================================================
+export const SOCIAL = {
+  instagram: "https://www.instagram.com/salome_uio/",
+  facebook: "https://www.facebook.com/profile.php?id=61583414706856",
+  tiktok: "https://www.tiktok.com/@salome_uio",
+};
