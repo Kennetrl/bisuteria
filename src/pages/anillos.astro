@@ -5,7 +5,7 @@ import { SITE, WA_MESSAGES } from '../config/site.ts';
 import type { ImageMetadata } from 'astro';
 
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(
-  '../assets/anillos/*.png',
+  '../assets/anillos/*.jpg',
   { eager: true }
 );
 
@@ -13,7 +13,7 @@ const images = Object.entries(imageModules)
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([path, mod]) => ({
     src: mod.default,
-    name: path.split('/').pop()?.replace('.png', '') || '',
+    name: path.split('/').pop()?.replace('.jpg', '') || '',
   }));
 
 const siteName = SITE.name || 'Joyería Salomé';
